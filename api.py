@@ -56,7 +56,9 @@ def create_user():
     db.session.add(new_user)
     db.session.commit()
 
-    return jsonify({'message':'New User Created'})
+    return jsonify({"message":"user sucessfully created",
+                    "responseCode": "200",
+                    "isSuccess": "true",})
 
 @app.route('/user/<public_id>',methods = ['PUT'])
 def change_user_details(public_id):

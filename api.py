@@ -18,7 +18,7 @@ class User(db.Model):
     name = db.Column(db.String(50))
     password = db.Column(db.String(100))
 
-
+#Route to get all the users 
 @app.route('/user',methods = ['GET'])
 def get_all_users():
 
@@ -32,10 +32,11 @@ def get_all_users():
         output.append(user_data)
     return jsonify({'users' : output})
 
-@app.route('/user/<public_id>',methods = ['GET'])
-def get_one_user(public_id):
+#Route to get a single the user
+@app.route('/user/<name>',methods = ['GET'])
+def get_one_user(name):
 
-    user = User.query.filter_by(public_id = public_id).first()
+    user = User.query.filter_by(name = name).first()
 
     if not user:
         return jsonify({'message':'User does not exist'})
@@ -45,7 +46,7 @@ def get_one_user(public_id):
     user_data['name'] = user.name
     user_data['password'] = user.password
 
-    return jsonify({'user':user_data})
+    return jsonify(user_data)
 
 @app.route('/user',methods = ['POST'])
 def create_user():
@@ -76,4 +77,4 @@ def delete_user(public_id):
     return jsonify({'message':'User deleted Sucessfully'})
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(host='0.0.0.0')
